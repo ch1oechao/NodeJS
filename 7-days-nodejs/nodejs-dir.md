@@ -2,17 +2,17 @@
 
 ####模块路径解析规则
 
-require 函数 支持 斜杠/ 或盘符C: 开头的绝对路径，也支持./开头的相对路径。但这两种路径在模块之间建立了强耦合关系，一旦某个模块文件的存放位置需要变更，使用该模块的其他模块的代码也需要跟着调整。
+```require``` 函数支持斜杠 ```/``` 或盘符 ```C:``` 开头的绝对路径，也支持 ```./``` 开头的相对路径。但这两种路径在模块之间建立了强耦合关系，一旦某个模块文件的存放位置需要变更，使用该模块的其他模块的代码也需要跟着调整。
 
-因此，require函数支持第三种形式的路径。
+因此，```require``` 函数支持第三种形式的路径。
 
 - 1.内置模块
  
-    如果传递给require函数的时NodeJS内置模块名称，不做路径解析，直接返回内部模块的导出对象，例如 require('fs');
+    如果传递给 ```require``` 函数的时 ```NodeJS``` 内置模块名称，不做路径解析，直接返回内部模块的导出对象，例如 ```require('fs')```;
     
 - 2.node_modules 目录
 
-	NodeJS定义了一个特殊的Node_modules目录用于存放模块。例如某个模块的绝对路径是/home/user/hello.js，在该模块中使用require('foo/bar')方式加载模块时，则NodeJS依次尝试使用以下路径。
+	```NodeJS``` 定义了一个特殊的 ```Node_modules``` 目录用于存放模块。例如某个模块的绝对路径是 ```/home/user/hello.js```，在该模块中使用 ```require('foo/bar')``` 方式加载模块时，则 ```NodeJS``` 依次尝试使用以下路径。
 	
 		/home/user/node_modules/foo/bar
 		/home/node_modules/foo/bar
@@ -20,11 +20,11 @@ require 函数 支持 斜杠/ 或盘符C: 开头的绝对路径，也支持./开
 		
 - 3.NODE_PATH环境变量
 
-	与PATH环境变量类似，NodeJS允许通过NODE_PATH环境变量来制定额外的模块搜索路径。NODE_PATH环境变量中包含一到多个目录路径，路径之间在Linux下使用:分隔，在Windows下使用;分隔。例如定义了以下NODE_PATH环境变量：
+	与 ```PATH``` 环境变量类似，```NodeJS``` 允许通过 ```NODE_PATH``` 环境变量来制定额外的模块搜索路径。```NODE_PATH```环境变量中包含一到多个目录路径，路径之间在Linux下使用 ```:``` 分隔，在Windows下使用 ```;``` 分隔。例如定义了以下 ```NODE_PATH``` 环境变量：
 		
 		NODE_PATH=/home/user/lib:/home/lib
 	
-	当使用 require('foo/bar') 的方式加载模块时，则NodeJS依次尝试以下路径。
+	当使用 ```require('foo/bar')``` 的方式加载模块时，则 ```NodeJS``` 依次尝试以下路径。
 	
 		/home/user/lib/foo/bar
 		/home/lib/foo/bar
@@ -63,11 +63,11 @@ JS模块的基本单位是单个JS文件，但复杂些的模块往往由多个�
 	
 以上两条语句等价。
 
-这样处理后，就只需要把包目录路径传递给 require 函数，感觉上整个目录被当作单个模块使用，更有整体感。
+这样处理后，就只需要把包目录路径传递给 ```require``` 函数，感觉上整个目录被当作单个模块使用，更有整体感。
 
 package.json
 
-如果想自定义入口模块的文件名和存放位置，就需要在包目录下包含一个package.json文件，并在其中指定入口模块的路径。
+如果想自定义入口模块的文件名和存放位置，就需要在包目录下包含一个 ```package.json``` 文件，并在其中指定入口模块的路径。
 
 	- /home/user/lib/
 		- cat/
@@ -79,14 +79,14 @@ package.json
 			+ tests/
 			package.json
 			
-其中package.json内容如下。
+其中 ```package.json``` 内容如下。
 
 	{
 		'name': 'cat',
 		'main': './lib/main.js'
 	}
 	
-如此一来，就同样可以使用require('/home/user/lib/cat')的方式加载模块。NodeJS会根据包目录下的package.json找到入口模块所在位置。
+如此一来，就同样可以使用 ```require('/home/user/lib/cat')``` 的方式加载模块。```NodeJS``` 会根据包目录下的 ```package.json``` 找到入口模块所在位置。
 
 #####工程目录
 
@@ -122,5 +122,5 @@ package.json
 		'main': './lib/echo.js'
 	}
 	
-以上例子中分类存放了不同的类型的文件，并通过node_modules目录直接使用三方包名加载模块。此外，定义了package.json之后，node-echo目录也可以当做一个包来使用。
+以上例子中分类存放了不同的类型的文件，并通过 ```node_modules``` 目录直接使用三方包名加载模块。此外，定义了 ```package.json``` 之后， ```node-echo``` 目录也可以当做一个包来使用。
 
